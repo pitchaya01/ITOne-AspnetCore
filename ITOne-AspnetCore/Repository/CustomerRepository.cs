@@ -13,9 +13,10 @@ namespace ITOne_AspnetCore.Repository
     {
         public DbDataContext _db;
         public DbDataReadContext _dbRead;
-        public CustomerRepository(DbDataContext db,DbDataReadContext _dbRead):base(db, _dbRead)
+        public CustomerRepository(DbDataContext db,DbDataReadContext dbRead):base(db, dbRead)
         {
-
+            _db = db;
+            _dbRead = dbRead;
         }
         [ReadUnCommited]
         public string GetCustomerName()

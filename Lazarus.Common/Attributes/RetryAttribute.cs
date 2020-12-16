@@ -59,6 +59,8 @@ namespace Lazarus.Common.Attributes
                         DomainEvents._Container.Resolve<ILogRepository>().Error(e.GetMessageError(), e.StackTrace, method);
                         if (i == RetryCount)
                             throw e;
+                   
+
 
                         Thread.Sleep(2000);
                     }

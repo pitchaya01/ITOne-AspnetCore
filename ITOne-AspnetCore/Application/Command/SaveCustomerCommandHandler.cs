@@ -14,36 +14,40 @@ namespace ITOne_AspnetCore.Application.Command
 {
     public class SaveCustomerCommandHandler : IRequestHandler<SaveCustomerCommand>
     {
-        public ICustomerRepository _repo;
+        public ICustomerRepository _repoCustomer;
         public IRepositoryBase<Address> _repoAddr;
         public IEventBus _eventBus;
         public SaveCustomerCommandHandler(ICustomerRepository repo, IEventBus eventBus, IRepositoryBase<Address> addrRepo)
         {
             _repoAddr = addrRepo;
             _eventBus = eventBus;
-            _repo = repo;
+            _repoCustomer = repo;
         }
         public async Task<Unit> Handle(SaveCustomerCommand request, CancellationToken cancellationToken)
         {
-            var c = _repo.Get(s=>s.Name=="Test").FirstOrDefault();
+            var c = _repo.Get(s => s.Name == "Test").FirstOrDefault();
+            //var name = _repo.GetCustomerName();
             //  var customer = Customer.Create("Customer");
             //_repo.Add(customer);
             c.UpdateName("Test");
-            AopTest();
-                 var a = Address.AddAddr("Test", c.AggregateId);
-            _repoAddr.Add(a) ;
-            
-            _repo.Update(c);
-            _repo.Commit();
 
-          //  _eventBus.Publish(new CustomerCreatedEvent() { Name = "Test" });
+            var a = Address.AddAddr("Test", c.AggregateId);
+            _repoAddr.Add(a);
+
+            _repoCustomer.Update(c);
+            _repoCustomer.Commit();
+
+
+            AopTest();
+            //  _eventBus.Publish(new CustomerCreatedEvent() { Name = "Test" });
 
             return Unit.Value;
         }
-        [Retry(RetryCount =3)]
+        [Retry(RetryCount = 3)]
         public string AopTest()
         {
             throw new Exception("Exception");
+
         }
     }
 }
