@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using ITOne_AspnetCore.Api.User.Database;
+using Lazarus.Common.DI;
+using Lazarus.Common.Nexus.Database;
 using Lazarus.Common.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,13 +29,18 @@ namespace ITOne_AspnetCore
         }
 
         public IConfiguration Configuration { get; }
-
+        public static ILifetimeScope AutofacContainer { get; set; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<Microsoft.AspNetCore.Http.IHttpContextAccessor, Microsoft.AspNetCore.Http.HttpContextAccessor>();
             services.AddControllers();
             services.AddHttpContextAccessor();
+            services.AddDbContext<DbDataContext>(options =>
+    options.UseSqlServer(Configuration.GetConnectionString("CustomerDatabase")).UseLazyLoadingProxies());
+            services.AddDbContext<NexusDataContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("NexusDatabase")));
+
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
@@ -101,6 +111,8 @@ namespace ITOne_AspnetCore
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             AppConfigUtilities._configuration = Configuration;
+            AutofacContainer = app.ApplicationServices.GetAutofacRoot();
+            DomainEvents._Container = AutofacContainer.BeginLifetimeScope();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

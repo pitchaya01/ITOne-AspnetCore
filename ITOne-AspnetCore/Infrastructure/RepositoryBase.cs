@@ -30,7 +30,7 @@ namespace ITOne_AspnetCore.Infrastructure
         }
         public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate)
         {
-            return _db.Set<TEntity>().Where(predicate).AsQueryable();
+            return _DbRead.Set<TEntity>().Where(predicate).AsQueryable();
         }
         public void Delete(TEntity entity)
         {
@@ -61,7 +61,7 @@ namespace ITOne_AspnetCore.Infrastructure
         public List<TEntity> Get()
         {
 
-            return _db.Set<TEntity>().ToList();
+            return _DbRead.Set<TEntity>().ToList();
         }
         public void DetachAllEntities()
         {

@@ -1,4 +1,5 @@
-﻿using Lazarus.Common.DAL;
+﻿using ITOne_AspnetCore.Repository;
+using Lazarus.Common.DAL;
 using Lazarus.Common.EventMessaging;
 using Shared.Event;
 using System;
@@ -10,14 +11,14 @@ namespace ITOne_AspnetCore.Domain.Event
 {
     public class CustomerCreatedEventHandler : IIntegrationEventHandler<CustomerCreatedEvent>
     {
-        public IRepositoryBase<Customer> _repo;
-        public CustomerCreatedEventHandler(IRepositoryBase<Customer> repo)
+        public ICustomerRepository _repo;
+        public CustomerCreatedEventHandler(ICustomerRepository repo)
         {
             _repo = repo;
         }
-        public Task Handle(CustomerCreatedEvent @event)
+        public async Task Handle(CustomerCreatedEvent @event)
         {
-            throw new NotImplementedException();
+            var aa = _repo.Get(a => a.Name == "Test").FirstOrDefault();
         }
 
         public Task Validate(CustomerCreatedEvent @event)

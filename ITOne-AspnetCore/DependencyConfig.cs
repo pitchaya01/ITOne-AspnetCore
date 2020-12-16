@@ -21,6 +21,7 @@ using Lazarus.Common.Validator;
 using MediatR;
 using MediatR.Pipeline;
 using RdKafka;
+using Shared.Event;
 using Shared.Proxy;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,8 @@ namespace ITOne_AspnetCore
             protected override void Load(ContainerBuilder builder)
             {
 
-         
-                builder.RegisterType<CommandHandlerExecutor>().AsImplementedInterfaces();
+            
+            builder.RegisterType<CommandHandlerExecutor>().AsImplementedInterfaces();
                 builder.RegisterType<CustomDependencyResolver>().AsImplementedInterfaces();
                 builder.RegisterType<EventStore>().AsImplementedInterfaces();
                 builder.RegisterAssemblyTypes(typeof(CustomerCreatedEventHandler).Assembly)
@@ -54,9 +55,7 @@ namespace ITOne_AspnetCore
 
                 builder.RegisterType<DbDataContext>().InstancePerLifetimeScope();
                 builder.RegisterType<DbDataReadContext>().InstancePerLifetimeScope();
-                //builder.RegisterAssemblyTypes(typeof(UserService).Assembly)
-                //  .Where(t => t.Name.EndsWith("Service"))
-                //  .AsImplementedInterfaces().InstancePerDependency();
+ 
                 builder.RegisterGeneric(typeof(RepositoryBase<>))
                     .AsImplementedInterfaces();
                 builder.Register<ServiceFactory>(ctx =>
@@ -203,7 +202,7 @@ namespace ITOne_AspnetCore
                 DomainEvents._Consumer = new EventConsumer(config, AppConfigUtilities.GetAppConfig<string>("KAFKA_URL"));
 
                 var eventBus = DomainEvents._Container.Resolve<IEventBus>();
-                //eventBus.Subscribe<MassEditCommandEvent, IIntegrationEventHandler<MassEditCommandEvent>>();
+                eventBus.Subscribe<CustomerCreatedEvent, IIntegrationEventHandler<CustomerCreatedEvent>>();
                 eventBus.StartBasicConsume();
                 #endregion
             }
