@@ -1,6 +1,7 @@
 ﻿using ITOne_AspnetCore.Api.User.Database;
 using ITOne_AspnetCore.Domain;
 using ITOne_AspnetCore.Infrastructure;
+using Lazarus.Common.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,13 @@ namespace ITOne_AspnetCore.Repository
         {
 
         }
+        [ReadUnCommited]
         public string GetCustomerName()
         {
-    
 
-            return "";   
+            var cus = _dbRead.Customers.FirstOrDefault();
+
+            return cus?.Name;   
         }
     }
 }

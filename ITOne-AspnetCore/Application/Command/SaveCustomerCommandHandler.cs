@@ -1,5 +1,6 @@
 ﻿using ITOne_AspnetCore.Domain;
 using ITOne_AspnetCore.Repository;
+using Lazarus.Common.Attributes;
 using Lazarus.Common.DAL;
 using Lazarus.Common.EventMessaging;
 using MediatR;
@@ -28,8 +29,8 @@ namespace ITOne_AspnetCore.Application.Command
             //  var customer = Customer.Create("Customer");
             //_repo.Add(customer);
             c.UpdateName("Test");
-       
-            var a = Address.AddAddr("Test", c.AggregateId);
+            AopTest();
+                 var a = Address.AddAddr("Test", c.AggregateId);
             _repoAddr.Add(a) ;
             
             _repo.Update(c);
@@ -38,6 +39,11 @@ namespace ITOne_AspnetCore.Application.Command
           //  _eventBus.Publish(new CustomerCreatedEvent() { Name = "Test" });
 
             return Unit.Value;
+        }
+        [Retry(RetryCount =3)]
+        public string AopTest()
+        {
+            throw new Exception("Exception");
         }
     }
 }
