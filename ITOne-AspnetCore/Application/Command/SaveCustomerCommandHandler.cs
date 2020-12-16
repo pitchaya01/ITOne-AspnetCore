@@ -25,7 +25,8 @@ namespace ITOne_AspnetCore.Application.Command
         }
         public async Task<Unit> Handle(SaveCustomerCommand request, CancellationToken cancellationToken)
         {
-            var c = _repo.Get(s => s.Name == "Test").FirstOrDefault();
+            var c = _repoCustomer.Get(s => s.Name == "Test").FirstOrDefault();
+
             //var name = _repo.GetCustomerName();
             //  var customer = Customer.Create("Customer");
             //_repo.Add(customer);
