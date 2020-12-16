@@ -29,17 +29,24 @@ namespace ITOne_AspnetCore
         }
 
         public IConfiguration Configuration { get; }
+        #region Implement
         public static ILifetimeScope AutofacContainer { get; set; }
+        #endregion
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<Microsoft.AspNetCore.Http.IHttpContextAccessor, Microsoft.AspNetCore.Http.HttpContextAccessor>();
+          
             services.AddControllers();
+
+            #region Implement
+            services.AddSingleton<Microsoft.AspNetCore.Http.IHttpContextAccessor, Microsoft.AspNetCore.Http.HttpContextAccessor>();
             services.AddHttpContextAccessor();
             services.AddDbContext<DbDataContext>(options =>
     options.UseSqlServer(Configuration.GetConnectionString("CustomerDatabase")).UseLazyLoadingProxies());
+
             services.AddDbContext<NexusDataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("NexusDatabase")));
+            #endregion
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -98,6 +105,7 @@ namespace ITOne_AspnetCore
 
         }
 
+        #region Implement
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new MediatorModule());
@@ -106,13 +114,20 @@ namespace ITOne_AspnetCore
             builder.RegisterModule(new RegisterEventModule());
             builder.RegisterModule(new SharedModule());
         }
+        #endregion
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            #region Implement
             AppConfigUtilities._configuration = Configuration;
+
             AutofacContainer = app.ApplicationServices.GetAutofacRoot();
             DomainEvents._Container = AutofacContainer.BeginLifetimeScope();
+            #endregion
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -133,7 +148,9 @@ namespace ITOne_AspnetCore
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
             app.UseCors("MyPolicy");
+            #region Implement
             DependencyConfig.RegisterEvent();
+            #endregion
         }
     }
 }

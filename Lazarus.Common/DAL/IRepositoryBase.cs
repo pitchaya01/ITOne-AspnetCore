@@ -18,6 +18,7 @@ namespace Lazarus.Common.DAL
         IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate);
         void Delete(TEntity entity);
         IQueryable<TEntity> Query();
+        void Commit();
     }
 
 

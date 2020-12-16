@@ -31,8 +31,8 @@ using System.Threading.Tasks;
 
 namespace ITOne_AspnetCore
 {
-   
-        public class RegisterEventModule : Autofac.Module
+    #region Implement
+    public class RegisterEventModule : Autofac.Module
         {
             protected override void Load(ContainerBuilder builder)
             {
@@ -207,5 +207,5 @@ namespace ITOne_AspnetCore
                 #endregion
             }
         }
-    
+    #endregion
 }

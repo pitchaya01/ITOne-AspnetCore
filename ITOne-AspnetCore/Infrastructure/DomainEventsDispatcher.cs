@@ -3,6 +3,7 @@ using Autofac.Core;
 using ITOne_AspnetCore.Api.User.Database;
 using Lazarus.Common.Application;
 using Lazarus.Common.Domain.Seedwork;
+using Lazarus.Common.EventMessaging;
 using Lazarus.Common.infrastructure;
 using MediatR;
 using Newtonsoft.Json;
@@ -20,9 +21,11 @@ namespace ITOne_AspnetCore.Infrastructure
         private readonly IMediator _mediator;
         private readonly ILifetimeScope _scope;
         private readonly DbDataContext _db;
+        private readonly IEventBus _eventBus;
 
-        public DomainEventsDispatcher(IMediator mediator, ILifetimeScope scope, DbDataContext db)
+        public DomainEventsDispatcher(IMediator mediator, ILifetimeScope scope, DbDataContext db, IEventBus eventBus)
         {
+            _eventBus = eventBus;
             this._mediator = mediator;
             this._scope = scope;
             this._db = db;
@@ -65,7 +68,8 @@ namespace ITOne_AspnetCore.Infrastructure
 
             foreach (var item in domainEvents)
             {
-                await _mediator.Publish(item);
+                var @event = (IntegrationEvent)item;
+                  _eventBus.Publish(@event);
             }
             //await Task.WhenAll(tasks);
 
