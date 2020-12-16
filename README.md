@@ -1,6 +1,7 @@
 # ITOne-AspnetCore
 
 Install Dependency
+
 Install-Package Microsoft.EntityFrameworkCore.SqlServer -Version 5.0.0
 Install-Package Microsoft.EntityFrameworkCore -Version 5.0.0
 Install-Package FluentValidation -Version 8.6.2
