@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Lazarus.Common.Application
 {
