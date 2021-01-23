@@ -59,7 +59,7 @@ namespace ITOne_AspnetCore
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "ASPNETCore API",
-                    Version = "v1",
+                    Version = "v3",
                     Description = "Full documentation to ASPNETCore public API",
                     Contact = new OpenApiContact
                     {
