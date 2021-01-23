@@ -121,10 +121,14 @@ namespace ITOne_AspnetCore
         {
             var pathBase = Configuration["API_PATH_BASE"]; // <---
 
+  
+
             if (!string.IsNullOrWhiteSpace(pathBase))
             {
                 app.UsePathBase($"/{pathBase.TrimStart('/')}");
             }
+
+            app.UseStaticFiles();
             #region Implement
             AppConfigUtilities._configuration = Configuration;
 
