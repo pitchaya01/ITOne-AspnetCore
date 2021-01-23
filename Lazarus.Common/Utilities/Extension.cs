@@ -91,26 +91,7 @@ namespace Lazarus.Common.Utilities
             if (string.IsNullOrEmpty(s)) return new List<string>();
             return s.Split(',').Where(a => string.IsNullOrEmpty(a) == false).Distinct().ToList();
         }
-        public static List<T> ToListof<T>(this DataTable dt)
-        {
-            const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
-            var columnNames = dt.Columns.Cast<DataColumn>()
-                .Select(c => c.ColumnName)
-                .ToList();
-            var objectProperties = typeof(T).GetProperties(flags);
-            var targetList = dt.AsEnumerable().Select(dataRow =>
-            {
-                var instanceOfT = Activator.CreateInstance<T>();
-
-                foreach (var properties in objectProperties.Where(properties => columnNames.Contains(properties.Name) && dataRow[properties.Name] != DBNull.Value))
-                {
-                    properties.SetValue(instanceOfT, dataRow[properties.Name], null);
-                }
-                return instanceOfT;
-            }).ToList();
-
-            return targetList;
-        }
+ 
         public static List<string> SplitSemicolonToList(this string str)
         {
             if (string.IsNullOrEmpty(str)) return new List<string>();
