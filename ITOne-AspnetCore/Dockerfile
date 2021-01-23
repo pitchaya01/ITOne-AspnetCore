@@ -9,7 +9,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["ITOne-AspnetCore/ITOne-AspnetCore.csproj", "ITOne-AspnetCore/"]
+COPY ["ITOne-AspnetCore.csproj", "ITOne-AspnetCore/"]
 COPY ["Lazarus.Common/Lazarus.Common.csproj", "Lazarus.Common/"]
 COPY ["Shared/Shared.csproj", "Shared/"]
 RUN dotnet restore "ITOne-AspnetCore/ITOne-AspnetCore.csproj"
