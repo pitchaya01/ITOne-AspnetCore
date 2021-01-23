@@ -119,7 +119,12 @@ namespace ITOne_AspnetCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var pathBase = Configuration["API_PATH_BASE"]; // <---
 
+            if (!string.IsNullOrWhiteSpace(pathBase))
+            {
+                app.UsePathBase($"/{pathBase.TrimStart('/')}");
+            }
             #region Implement
             AppConfigUtilities._configuration = Configuration;
 

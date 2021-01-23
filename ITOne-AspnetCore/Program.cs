@@ -17,6 +17,12 @@ namespace ITOne_AspnetCore
         {
             var host = Host.CreateDefaultBuilder(args)
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                  {
+                      // ..  
+                      config.AddEnvironmentVariables(); // <---
+                                                        // ..
+                  })
                 .ConfigureWebHostDefaults(webHostBuilder => {
                     webHostBuilder
                      .UseContentRoot(Directory.GetCurrentDirectory())
