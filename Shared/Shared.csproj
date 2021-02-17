@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.16.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.16.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Lazarus.Common\Lazarus.Common.csproj" />
   </ItemGroup>
 

@@ -28,5 +28,11 @@ namespace ITOne_AspnetCore.Controllers
             await _mediator.Send(param);
             return ResponseResult<bool>.Success();
         }
+        [HttpGet]
+        public async Task<ResponseResult<string>> GetFirstName( )
+        {
+         var result=   await _mediator.Send(new GetCustomerCommand());
+            return ResponseResult<string>.Success();
+        }
     }
 }

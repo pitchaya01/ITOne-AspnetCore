@@ -25,7 +25,7 @@ namespace ITOne_AspnetCore.Domain
         {
             var c = new Customer();
             c.Name = name;
-            c.AddDomainEvent(new CustomerCreatedEvent() { Name = c.Name });
+          //  c.AddDomainEvent(new CustomerCreatedEvent() { Name = c.Name });
             return c;
         }
         public void UpdateName(string name)

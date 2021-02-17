@@ -35,7 +35,7 @@ namespace ITOne_AspnetCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          
+            services.AddApplicationInsightsTelemetry("63f09361-5f3e-40be-b616-17db3cd344df");
             services.AddControllers();
 
             #region Implement

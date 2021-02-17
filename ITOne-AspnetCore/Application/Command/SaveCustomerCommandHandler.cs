@@ -25,21 +25,21 @@ namespace ITOne_AspnetCore.Application.Command
         }
         public async Task<Unit> Handle(SaveCustomerCommand request, CancellationToken cancellationToken)
         {
-            var c = _repoCustomer.Get(s => s.Name == "Test").FirstOrDefault();
+           // var c = _repoCustomer.Get(s => s.Name == "Test").FirstOrDefault();
 
             //var name = _repo.GetCustomerName();
-            //  var customer = Customer.Create("Customer");
-            //_repo.Add(customer);
-            c.UpdateName("Test");
+              var customer = Customer.Create("Customer");
+            _repoCustomer.Add(customer);
+            //c.UpdateName("Test");
 
-            var a = Address.AddAddr("Test", c.AggregateId);
-            _repoAddr.Add(a);
+            //var a = Address.AddAddr("Test", c.AggregateId);
+            //_repoAddr.Add(a);
 
-            _repoCustomer.Update(c);
+            //_repoCustomer.Update(c);
             _repoCustomer.Commit();
 
 
-            AopTest();
+            //AopTest();
             //  _eventBus.Publish(new CustomerCreatedEvent() { Name = "Test" });
 
             return Unit.Value;

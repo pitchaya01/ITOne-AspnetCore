@@ -41,7 +41,7 @@ namespace Lazarus.Common.ExceptionHandling
 
                     DomainEvents._Container.Resolve<ILogRepository>().Error(msg, actionExecutedContext.HttpContext.Request.Path.ToString(), "SYSTEM_ERROR");
 
-                    actionExecutedContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.OK;
+                    actionExecutedContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     actionExecutedContext.Result = new JsonResult(errorModel);
 
                 }
