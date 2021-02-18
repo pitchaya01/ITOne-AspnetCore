@@ -25,6 +25,7 @@ namespace ITOne_AspnetCore.Controllers
         [HttpPost]
         public async Task<ResponseResult<bool>> Save(SaveCustomerCommand param)
         {
+            //Test
             await _mediator.Send(param);
             return ResponseResult<bool>.Success();
         }
