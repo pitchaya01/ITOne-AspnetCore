@@ -121,12 +121,12 @@ namespace ITOne_AspnetCore
         {
             var pathBase = Configuration["API_PATH_BASE"]; // <---
 
-  
+            pathBase = "itone";
+            var path = pathBase.TrimStart('/');
 
-            if (!string.IsNullOrWhiteSpace(pathBase))
-            {
-                app.UsePathBase($"/{pathBase.TrimStart('/')}");
-            }
+
+                app.UsePathBase($"/{path}");
+        
 
             app.UseStaticFiles();
             #region Implement
